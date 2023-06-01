@@ -22,14 +22,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importStar(require("mongoose"));
-const songSchema = new mongoose_1.Schema({
-    artist: { type: String, required: true },
-    album: { type: String, required: true },
-    title: { type: String, required: true },
-    length: { type: Number, required: true },
-    track: { type: Number, required: true },
-});
-const Song = mongoose_1.default.model('Song', songSchema);
-exports.default = Song;
+var express_1 = __importDefault(require("express"));
+// Create Express server
+var routes = (0, express_1.default)();
+var songController = __importStar(require("../controllers/songs"));
+var playlistController = __importStar(require("../controllers/playlist"));
+routes.get('/song', songController.getSongs);
+routes.get('/song/:id', songController.getSong);
+routes.post('/song', songController.createSong);
+routes.delete('/song/:id', songController.deleteSong);
+routes.get('/playlist', playlistController.getPlaylists);
+routes.get('/playlist/:id', playlistController.getPlaylist);
+routes.post('/playlist', playlistController.createPlaylist);
+routes.delete('/playlist/:id', playlistController.deletePlaylist);
+routes.put('/playlist/:id', playlistController.addSongsToPlaylist);
+exports.default = routes;

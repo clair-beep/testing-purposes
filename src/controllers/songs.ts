@@ -38,7 +38,7 @@ export const createSong = async (
 ): Promise<void> => {
   try {
     const { artist, album, title, length, track } = req.body;
-
+    console.log(req.body);
     if (
       !artist ||
       typeof artist !== 'string' ||

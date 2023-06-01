@@ -22,23 +22,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const routes = (0, express_1.default)();
-const songController = __importStar(require("../controllers/songs"));
-const playlistController = __importStar(require("../controllers/playlist"));
-const testController = __importStar(require("../controllers/test"));
-routes.get('/song', songController.getSongs);
-routes.get('/song/:id', songController.getSong);
-routes.post('/song', songController.createSong);
-routes.delete('/song/:id', songController.deleteSong);
-routes.get('/playlist', playlistController.getPlaylists);
-routes.get('/playlist/:id', playlistController.getPlaylist);
-routes.post('/playlist', playlistController.createPlaylist);
-routes.delete('/playlist/:id', playlistController.deletePlaylist);
-routes.put('/playlist/:id', playlistController.addSongsToPlaylist);
-routes.get('/user', testController.getThis);
-exports.default = routes;
+var mongoose_1 = __importStar(require("mongoose"));
+var playlistSchema = new mongoose_1.Schema({
+    name: { type: String, required: true },
+    songs: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Song', required: true }], // Reference to Song model
+});
+var Playlist = mongoose_1.default.model('Playlist', playlistSchema);
+exports.default = Playlist;
